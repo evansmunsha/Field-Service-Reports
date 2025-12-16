@@ -9,7 +9,7 @@ import { MonthlyReport } from "@/components/monthly-report"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { getMonthlyReport } from "@/app/actions/entries"
-import { Loader2, LogOut } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { UserButton, useUser } from "@stackframe/stack"
 
 export default function HomeContent() {
@@ -162,6 +162,27 @@ export default function HomeContent() {
           </TabsContent>
         </Tabs>
       </div>
+            {/* Footer */}
+      <footer className="pt-6 pb-4 text-center">
+        <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
+          <a href="/about" className="hover:underline">
+            About
+          </a>
+          <span className="opacity-40">•</span>
+          <a href="/privacy" className="hover:underline">
+            Privacy
+          </a>
+          <span className="opacity-40">•</span>
+          <a href="/terms" className="hover:underline">
+            Terms
+          </a>
+        </div>
+
+        <p className="mt-2 text-[11px] text-muted-foreground/70">
+          Built by Evans Munsha · Free & open for public use
+        </p>
+      </footer>
+
     </div>
   )
 }
