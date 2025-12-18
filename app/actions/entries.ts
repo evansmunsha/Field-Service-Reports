@@ -1,4 +1,4 @@
-// app/actions/entries.ts
+/// app/actions/entries.ts
 "use server"
 
 import { revalidatePath } from "next/cache"
