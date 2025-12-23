@@ -65,7 +65,7 @@ export default function SigninPage() {
       <Card className="w-full max-w-md border-border/40">
         <CardHeader>
           <CardTitle className="text-2xl">Sign In</CardTitle>
-          <CardDescription>Welcome back to Field Service Report</CardDescription>
+          <CardDescription>Welcome back to Field Service Reports</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
