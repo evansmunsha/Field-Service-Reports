@@ -1,62 +1,74 @@
-import { type NextAuthConfig } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import prisma from "@/lib/db"
+import Credentials from "next-auth/providers/credentials"
+import { NextAuthConfig } from "next-auth"
 
-export const authConfig = {
-  // 🔐 THIS LINE FIXES PRODUCTION LOGIN
-  secret: process.env.NEXTAUTH_SECRET,
-
+export const authConfig: NextAuthConfig = {
+  secret: process.env.AUTH_SECRET as string,
   pages: {
     signIn: "/signin",
   },
-
   session: {
     strategy: "jwt",
   },
-
   providers: [
     Credentials({
+      name: "Email",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        // Check that credentials exist and are strings
+        if (
+          !credentials?.email ||
+          typeof credentials.email !== "string" ||
+          !credentials?.password ||
+          typeof credentials.password !== "string"
+        ) {
           return null
         }
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
+          where: { email: credentials.email },
         })
 
-        if (!user) return null
+        if (!user || typeof user.password !== "string") return null
 
+        // Now TypeScript knows these are strings
         const passwordsMatch = await bcrypt.compare(
-          credentials.password as string,
+          credentials.password,
           user.password
         )
 
         if (!passwordsMatch) return null
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        }
+        return { id: user.id, email: user.email, name: user.name }
       },
     }),
   ],
-
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.id = user.id
-      return token
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-      }
-      return session
-    },
+  async jwt({ token, user }) {
+    if (user) {
+      // Assert that user.id is a string
+      token.id = user.id as string
+    }
+    return token
   },
-} satisfies NextAuthConfig
+  async session({ session, token }) {
+    if (session.user) {
+      // Assert that token.id is a string
+      session.user.id = token.id as string
+    }
+    return session
+  },
+},
+
+}
+
+
+
+
 
 
 

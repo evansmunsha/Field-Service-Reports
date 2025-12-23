@@ -1,10 +1,7 @@
-import { auth } from "@/auth"
+import NextAuth from "next-auth"
+import { authConfig } from "./auth.config"
 
-export default auth((req) => {
-  if (!req.auth && !req.nextUrl.pathname.startsWith("/signin")) {
-    return Response.redirect(new URL("/signin", req.nextUrl.origin))
-  }
-})
+export const { auth: middleware } = NextAuth(authConfig)
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
