@@ -6,7 +6,6 @@ import withPWA from "next-pwa";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  //swcMinify: true,
   output: "export",
   trailingSlash: true,
   distDir: "out",
@@ -29,7 +28,8 @@ const nextConfig: NextConfig = {
   //generateStaticParams: async () => [],
 };
 
-const pwaConfig = withPWA({
+
+export default (withPWA as any)({
   dest: "public",
   register: true,
   skipWaiting: true,
@@ -70,6 +70,4 @@ const pwaConfig = withPWA({
   disable:
     process.env.NODE_ENV === "development" ||
     process.env.CAPACITOR_BUILD === "true",
-});
-
-export default pwaConfig(nextConfig);
+})(nextConfig);
