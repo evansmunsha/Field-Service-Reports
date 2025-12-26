@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.fieldservicereport.app",
+  appId: "app.field-service-reports.vercel",
   appName: "Field Service Report",
   webDir: "out",
   server: {
@@ -28,7 +28,7 @@ const config: CapacitorConfig = {
       resizeOnFullScreen: true,
     },
     App: {
-      launchUrl: "https://fieldservicereport.app",
+      launchUrl: "https://field-service-reports.vercel.app",
     },
     BackgroundSync: {
       enabled: true,

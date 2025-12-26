@@ -77,8 +77,13 @@ export default function SigninPage() {
               alt="Field Service Report"
               width={64}
               height={64}
+              priority
+              unoptimized
               className="mx-auto rounded-lg"
             />
+
+
+            
           </div>
           <CardTitle className="text-2xl">Sign In</CardTitle>
           <CardDescription>
