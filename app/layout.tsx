@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   title: "Field Service Report | Track Ministry Time",
   description:
     "Track your field service hours, Bible studies, and generate monthly ministry reports",
-  generator: "v0.app",
-  metadataBase: new URL("https://fieldservicereport.app"),
+  generator: "Munsha",
+  metadataBase: new URL("https://field-service-reports.vercel.app"),
   applicationName: "Field Service Report",
   keywords: [
     "field service",
@@ -70,25 +70,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import Head from "next/head";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
+      <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0f172a" />
         <link rel="apple-touch-icon" href="/logo.png" />
-      </head>
+      </Head>
       <body className="font-sans antialiased">
-        <SessionProvider>
-          {/* Keep layout fully server-rendered */}
-          {children}
-          <Analytics />
-        </SessionProvider>
+        <SessionProvider>{children}<Analytics /></SessionProvider>
       </body>
     </html>
   );
 }
+
