@@ -6,7 +6,7 @@ import withPWA from "next-pwa";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  //swcMinify: true,
   output: "export",
   trailingSlash: true,
   distDir: "out",
@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
     assetPrefix: "./",
   }),
   // Enable static images
-  generateStaticParams: async () => [],
+  //generateStaticParams: async () => [],
 };
 
 const pwaConfig = withPWA({
