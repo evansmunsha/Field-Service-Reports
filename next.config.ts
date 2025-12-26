@@ -1,3 +1,6 @@
+// next.config.ts
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 import type { NextConfig } from "next";
 import withPWA from "next-pwa";
 
