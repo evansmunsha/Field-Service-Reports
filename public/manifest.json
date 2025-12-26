@@ -1,48 +1,110 @@
+
 {
-"display_override": ["window-controls-overlay"], 
-"protocol_handlers": [{"protocol":"mailto","url":"/newEmail?to=%s"}], 
-  "name": "Field Service Reports",
-  "short_name": "FSR",
-  "description": "Track your field service hours, Bible studies, and generate monthly ministry reports",
+  "name": "Otherlingo - Real-time Translation Chat",
+  "short_name": "Otherlingo",
+  "description": "Break language barriers with real-time translation chat, voice messages, and seamless communication across 70+ languages.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0f172a",
+  "theme_color": "#007bff",
   "orientation": "portrait-primary",
-  "categories": ["productivity", "lifestyle"],
-  "lang": "en-US",
+  "scope": "/",
+  "id": "com.otherlingo.mobile",
+  "lang": "en",
+  "categories": ["communication", "social", "productivity"],
   "dir": "ltr",
   "icons": [
-    { "src": "/logo-72.png", "sizes": "72x72", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-96.png", "sizes": "96x96", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-128.png", "sizes": "128x128", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-144.png", "sizes": "144x144", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-152.png", "sizes": "152x152", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-384.png", "sizes": "384x384", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "screenshots": [
-    { "src": "/screenshot-mobile.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow" },
-    { "src": "/screenshot-desktop.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide" }
-  ],
-  "features": ["Cross Platform", "fast", "simple"],
-  "prefer_related_applications": false,
-  "related_applications": [],
-  "shortcuts": [
     {
-      "name": "Log Time",
-      "short_name": "Log",
-      "description": "Quickly log field service time",
-      "url": "/?tab=log",
-      "icons": [{ "src": "/logo-192.png", "sizes": "192x192", "type": "image/png" }]
+      "src": "/icons/otherlingo_icon_72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "name": "View Report",
-      "short_name": "Report",
-      "description": "View monthly service report",
-      "url": "/?tab=report",
-      "icons": [{ "src": "/logo-192.png", "sizes": "192x192", "type": "image/png" }]
+      "src": "/icons/otherlingo_icon_96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/otherlingo_icon_128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/otherlingo_icon_144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/otherlingo_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/otherlingo_icon_256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/otherlingo_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-chat.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Chat interface on desktop"
+    },
+    {
+      "src": "/screenshots/mobile-chat.jpg",
+      "sizes": "390x844",
+      "type": "image/jpg",
+      "form_factor": "narrow",
+      "label": "Chat interface on mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Chat",
+      "short_name": "Chat",
+      "description": "Start a new conversation",
+      "url": "/chat",
+      "icons": [
+        {
+          "src": "/icons/otherlingo_icon_96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Create Room",
+      "short_name": "Room",
+      "description": "Create a new chat room",
+      "url": "/chat?action=create-room",
+      "icons": [
+        {
+          "src": "/icons/otherlingo_icon_96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }
