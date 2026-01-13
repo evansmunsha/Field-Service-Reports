@@ -217,8 +217,21 @@ export function MonthlyReport({
   };
   
   const handleShareWhatsApp = () => {
-    const reportText = generateReportText();
-    const encodedText = encodeURIComponent(reportText);
+    // Create a simplified report for WhatsApp sharing
+    let text = `FIELD SERVICE REPORT\n`;
+    text += `${"=".repeat(50)}\n\n`;
+    text += `Name: ${userName}\n`;
+    text += `Month: ${monthName}\n\n`;
+    text += `${"=".repeat(50)}\n\n`;
+    text += `SUMMARY\n`;
+    text += `${"=".repeat(50)}\n`;
+    text += `Total Hours: ${totalHours}\n`;
+    text += `Bible Studies Conducted: ${studiesCount}\n`;
+    text += `Participated in Ministry: ${participated ? "Yes" : "No"}\n\n`;
+    text += `${"=".repeat(50)}\n`;
+    text += `Generated on ${format(new Date(), "PPP 'at' p")}`;
+    
+    const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/?text=${encodedText}`;
       
     // Open WhatsApp in a new window/tab
