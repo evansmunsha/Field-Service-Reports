@@ -5,8 +5,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Head from "next/head";
-import RegisterSW from "./register-sw";
 import "./globals.css";
+import Script from "next/script";
+import InstallPrompt from "@/components/install-button";
 
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -70,12 +71,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <Head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="./icon-72.png" />
+        <link rel="apple-touch-icon" href="/icon-72.png" />
         <meta name="theme-color" content="#0f172a" />
       </Head>
       <body className="font-sans antialiased">
         <SessionProvider>
-          <RegisterSW />
           {children}
+          <InstallPrompt />
+          <Script
+          id="register-sw"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js');
+                });
+              }
+
+            `,
+          }}
+        ></Script>
           <Analytics />
         </SessionProvider>
         

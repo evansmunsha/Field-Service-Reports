@@ -1,66 +1,61 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Download } from "lucide-react";
+import { useEffect, useState } from 'react';
 
-let deferredPrompt: any = null;
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
 
-export default function InstallButton() {
+export default function InstallPrompt() {
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // If already installed before, never show again
-    if (localStorage.getItem("pwa-installed") === "true") return;
-
-    const handler = (e: any) => {
+    const handler = (e: Event) => {
       e.preventDefault();
-      deferredPrompt = e;
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
       setVisible(true);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
-
-    // If app gets installed, hide forever
-    window.addEventListener("appinstalled", () => {
-      localStorage.setItem("pwa-installed", "true");
-      setVisible(false);
-    });
+    window.addEventListener('beforeinstallprompt', handler);
 
     return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener('beforeinstallprompt', handler);
     };
   }, []);
+
+  const installApp = async () => {
+    if (!deferredPrompt) return;
+
+    await deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+
+    if (choice.outcome === 'accepted') {
+      setVisible(false);
+    }
+  };
 
   if (!visible) return null;
 
   return (
-    <button
-      onClick={async () => {
-        if (!deferredPrompt) return;
+    <div className="fixed bottom-4 left-4 right-4 z-50 rounded-xl bg-indigo-600 p-4 text-white shadow-xl md:left-auto md:right-6 md:w-96">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="font-semibold">Install Field Service Reports</p>
+          <p className="text-sm opacity-90">
+            Get faster access and offline support
+          </p>
+        </div>
 
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-
-        if (choice.outcome === "accepted") {
-          localStorage.setItem("pwa-installed", "true");
-          setVisible(false);
-        }
-
-        deferredPrompt = null;
-      }}
-      className="
-        fixed bottom-6 right-6 z-50
-        flex items-center gap-2
-        rounded-full px-5 py-3
-        bg-slate-900 text-white
-        shadow-lg shadow-black/20
-        hover:bg-slate-800
-        active:scale-95
-        transition-all duration-200
-      "
-    >
-      <Download size={18} />
-      <span className="font-medium text-sm">Install App</span>
-    </button>
+        <button
+          onClick={installApp}
+          className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-600"
+        >
+          Install
+        </button>
+      </div>
+    </div>
   );
 }
