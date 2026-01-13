@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -88,15 +87,6 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md border-border/40">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4">
-            <Image
-              src="/logo.png"
-              alt="Field Service Report"
-              width={64}
-              height={64}
-              className="mx-auto rounded-lg"
-            />
-          </div>
           <CardTitle className="text-2xl">Create Account</CardTitle>
           <CardDescription>Sign up for Field Service Reports</CardDescription>
         </CardHeader>

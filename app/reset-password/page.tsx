@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -99,15 +98,6 @@ export default function ResetPasswordPage() {
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <Card className="w-full max-w-md border-border/40">
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4">
-              <Image
-                src="/logo.png"
-                alt="Field Service Report"
-                width={48}
-                height={48}
-                className="mx-auto rounded-lg"
-              />
-            </div>
             <CardTitle className="text-2xl flex items-center justify-center gap-2">
               <CheckCircle className="h-6 w-6 text-green-500" />
               Password Reset Complete
@@ -131,15 +121,6 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md border-border/40">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4">
-            <Image
-              src="/logo.png"
-              alt="Field Service Report"
-              width={64}
-              height={64}
-              className="mx-auto rounded-lg"
-            />
-          </div>
           <CardTitle className="text-2xl">Reset Password</CardTitle>
           <CardDescription>Enter your new password below</CardDescription>
         </CardHeader>

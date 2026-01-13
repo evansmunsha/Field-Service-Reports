@@ -4,8 +4,9 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import Head from "next/head";
+import RegisterSW from "./register-sw";
 import "./globals.css";
-import Script from "next/script";
 
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -33,15 +34,6 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
-  },
-  icons: {
-    icon: [
-      { url: "/logo.png", sizes: "any", type: "image/png" },
-      { url: "/logo.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo.png", sizes: "512x512", type: "image/png" },
-    ],
-    shortcut: "/logo.png",
-    apple: [{ url: "/logo.png", sizes: "192x192", type: "image/png" }],
   },
   manifest: "/manifest.json",
   themeColor: [
@@ -72,7 +64,6 @@ export const metadata: Metadata = {
   },
 };
 
-import Head from "next/head";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -80,27 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0f172a" />
-        <link rel="apple-touch-icon" href="/logo.png" />
       </Head>
       <body className="font-sans antialiased">
-        <SessionProvider>{children}<Analytics /></SessionProvider>
-        <Script
-          id="register-sw"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-                navigator.serviceWorker.register('/sw.js')
-                  .then((registration) => {
-                    console.log('Service Worker registered:', registration);
-                  })
-                  .catch((error) => {
-                    console.log('Service Worker registration failed:', error);
-                  });
-              }
-            `,
-          }}
-        />
+        <SessionProvider>
+          <RegisterSW />
+          {children}
+          <Analytics />
+        </SessionProvider>
+        
       </body>
     </html>
   );

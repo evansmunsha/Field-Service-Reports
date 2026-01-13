@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -56,18 +55,6 @@ export default function OfflinePage() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md border-border/40">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4">
-            <Image
-              src="/logo.png"
-              alt="Field Service Report"
-              width={64}
-              height={64}
-              className="mx-auto rounded-lg mb-2"
-            />
-            <div className="p-3 rounded-full bg-muted w-fit mx-auto">
-              <WifiOff className="h-8 w-8 text-muted-foreground" />
-            </div>
-          </div>
           <CardTitle className="text-2xl">You&apos;re Offline</CardTitle>
           <CardDescription>
             It looks like you&apos;re not connected to the internet. Some

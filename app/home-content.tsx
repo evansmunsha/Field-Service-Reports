@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { getMonthlyReport, getYearlyStats } from "@/app/actions/entries";
 import { Loader2, LogOut } from "lucide-react";
 import type { MonthlyReport as IMonthlyReport, YearlyStats } from "@/lib/types";
+import InstallButton from "@/components/install-button";
 
 export default function HomeContent() {
   const { data: session, status } = useSession();
@@ -229,6 +230,8 @@ export default function HomeContent() {
         <p className="mt-2 text-[11px] text-muted-foreground/70">
           Built by Evans Munsha · Free & open for public use
         </p>
+        
+        <InstallButton />
       </footer>
     </div>
   );
