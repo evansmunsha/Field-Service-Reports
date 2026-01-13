@@ -1,7 +1,10 @@
-const CACHE_NAME = 'field-service-v1';
+const CACHE_NAME = 'field-service-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
+  '/icon-152.png',
+  '/icon_72.png',
+  '/offline',
 ];
 
 // Install event
@@ -28,24 +31,40 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event
+// Fetch event - Network First strategy for better offline support
 self.addEventListener('fetch', (event) => {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then((response) => {
-        if (response) {
+        // Check if valid response
+        if (!response || response.status !== 200 || response.type === 'error') {
           return response;
         }
-        return fetch(event.request).then((response) => {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
+
+        // Clone the response
+        const responseToCache = response.clone();
+
+        // Cache successful responses
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+
+        return response;
+      })
+      .catch(() => {
+        // Network failed, try cache
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
           }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-          return response;
+
+          // If offline page is requested and not cached, return a basic response
+          if (event.request.mode === 'navigate') {
+            return caches.match('/offline');
+          }
         });
       })
   );
