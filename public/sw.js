@@ -54,8 +54,9 @@ self.addEventListener('fetch', (event) => {
 
         return response;
       })
+      
       .catch(() => {
-        // Network failed, try cache
+        //// Network failed, try cache
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
