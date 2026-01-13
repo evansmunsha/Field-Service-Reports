@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { Download, FileText, File } from "lucide-react";
+import { Download, FileText, File, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -185,35 +185,44 @@ export function MonthlyReport({
     text += `Month: ${monthName}\n\n`;
     text += `${"=".repeat(50)}\n\n`;
     text += `SUMMARY\n`;
-    text += `${"-".repeat(50)}\n`;
+    text += `${"=".repeat(50)}\n`;
     text += `Total Hours: ${totalHours}\n`;
     text += `Bible Studies Conducted: ${studiesCount}\n`;
     text += `Participated in Ministry: ${participated ? "Yes" : "No"}\n\n`;
     text += `${"=".repeat(50)}\n\n`;
     text += `DETAILED ENTRIES\n`;
-    text += `${"-".repeat(50)}\n\n`;
-
+    text += `${"=".repeat(50)}\n\n`;
+  
     entries.forEach((entry, index) => {
       text += `Entry ${index + 1}\n`;
       text += `Date: ${format(new Date(entry.date), "EEEE, MMMM d, yyyy")}\n`;
       text += `Time: ${format(new Date(entry.timeStarted), "h:mm a")} - ${format(new Date(entry.timeEnded), "h:mm a")}\n`;
       text += `Hours: ${entry.hoursWorked.toFixed(1)}\n`;
-
+  
       if (entry.studies.length > 0) {
         text += `Studies: ${entry.studies.map((s) => s.participant).join(", ")}\n`;
       }
-
+  
       if (entry.comments) {
         text += `Comments: ${entry.comments}\n`;
       }
-
+  
       text += `\n`;
     });
-
+  
     text += `${"=".repeat(50)}\n`;
     text += `Generated on ${format(new Date(), "PPP 'at' p")}\n`;
-
+  
     return text;
+  };
+  
+  const handleShareWhatsApp = () => {
+    const reportText = generateReportText();
+    const encodedText = encodeURIComponent(reportText);
+    const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+      
+    // Open WhatsApp in a new window/tab
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -238,6 +247,11 @@ export function MonthlyReport({
                 <Button variant="outline" size="sm" onClick={handleDownloadTxt}>
                   <Download className="h-4 w-4 mr-2" />
                   Text
+                </Button>
+
+                <Button variant="outline" size="sm" onClick={handleShareWhatsApp}>
+                  <Share2 className="h-4 w-4 mr-2" />
+                  WhatsApp
                 </Button>
               </div>
             </div>
