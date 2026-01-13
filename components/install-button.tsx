@@ -13,6 +13,9 @@ export default function InstallPrompt() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // Never show again if already installed
+    if (localStorage.getItem('pwa-installed') === 'true') return;
+
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -20,6 +23,11 @@ export default function InstallPrompt() {
     };
 
     window.addEventListener('beforeinstallprompt', handler);
+
+    window.addEventListener('appinstalled', () => {
+      localStorage.setItem('pwa-installed', 'true');
+      setVisible(false);
+    });
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
@@ -33,25 +41,49 @@ export default function InstallPrompt() {
     const choice = await deferredPrompt.userChoice;
 
     if (choice.outcome === 'accepted') {
+      localStorage.setItem('pwa-installed', 'true');
       setVisible(false);
     }
+
+    setDeferredPrompt(null);
   };
 
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 rounded-xl bg-indigo-600 p-4 text-white shadow-xl md:left-auto md:right-6 md:w-96">
+    <div
+      className="
+        fixed bottom-6 left-4 right-4 z-50
+        mx-auto max-w-md
+        animate-slide-up
+        rounded-2xl
+        bg-gradient-to-br from-slate-900 to-slate-800
+        p-4 text-white
+        shadow-2xl shadow-black/30
+      "
+    >
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="font-semibold">Install Field Service Reports</p>
-          <p className="text-sm opacity-90">
-            Get faster access and offline support
+          <p className="text-sm font-semibold">
+            Install Field Service Reports
+          </p>
+          <p className="text-xs text-white/80">
+            Works offline • Faster access • App-like experience
           </p>
         </div>
 
         <button
           onClick={installApp}
-          className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-600"
+          className="
+            shrink-0
+            rounded-xl
+            bg-white px-4 py-2
+            text-sm font-semibold
+            text-slate-900
+            hover:bg-slate-100
+            active:scale-95
+            transition-all
+          "
         >
           Install
         </button>
