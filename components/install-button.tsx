@@ -31,7 +31,7 @@ export default function InstallButton() {
     };
   }, []);
 
-  if (visible) return null;
+  if (!visible) return null;
 
   return (
     <button
